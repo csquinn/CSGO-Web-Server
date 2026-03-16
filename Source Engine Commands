@@ -1,0 +1,193 @@
+sv_quota_stringcmdspersecond 2000
+//allows more than 40 cmds per second, handles client believing http headers are commands
+
+alias GET "echo HTTP/1.1 200 OK; echo Server: CSGO; echo Content-Type: text/html; echo Content-Length: 5742; echo; echo <title>CSGO Webserver</title>; echo <h1>She Counter on my Strike till I GO</h1>; master;"
+//HTTP header TODO figure out Content Length
+//Browser sends Get request as part of normal transaction, sends header and then calls master alias command
+
+alias master "b1; b2; b3; l; b4; b5; l; b6; b7; l; b8; b9; l; b10; b11; b12; l; b13; l; b14; startS; master2; endS; l; info;"
+alias master2 "f1; f2; f3; f4; f5; f6; c1; c2; c3; c4; c5; c6; c7; c8; c9; c10; c11; c12; c13; c14; c15; c16; c17; c18; c19; c20; c21; c22; c23; c24; c25; c26; c27; c28;"
+//Master alias commands, handles everything. Split into 2 sections because command was getting too long
+//alias cheatsheet: b = place a button, f = create a function used for game interaction, p = call functions, startS/endS = puts the javascript html tag, l = linebreak
+//TODO rename aliases
+
+alias startS "echo <script>"
+alias endS "echo </script>"
+alias l "echo <br><br>"
+
+//buttons are not in same order as functions that define them. This is because I had design ideas too late into the process
+alias b1 "echo <button id='lookleft'>LOOK LEFT</button>"
+
+alias b2 "echo <button id='shoot'>SHOOT</button>"
+
+alias b3 "echo <button id='lookright'>LOOK RIGHT</button>"
+
+alias b4 "echo <button id='forward'>FORWARD</button>"
+
+alias b5 "echo <button id='backwards'>BACKWARDS</button>"
+
+alias b6 "echo <button id='left'>LEFT</button>"
+
+alias b7 "echo <button id='right'>RIGHT</button>"
+
+alias b8 "echo <button id='duck'>DUCK</button>"
+
+alias b9 "echo <button id='jump'>JUMP</button>"
+
+alias b10 "echo <button id='slot1'>SLOT 1</button>"
+
+alias b11 "echo <button id='slot2'>SLOT 2</button>"
+
+alias b12 "echo <button id='slot3'>SLOT 3</button>"
+
+alias b13 "echo <button id='respawn'>RESPAWN</button>"
+
+alias b14 "echo <button id='reset'>RESET GAME</button>"
+
+//general function logic: encode function into base64, then decode and run
+//done because of issues with source engine console and special characters like ( ) " " ' ' ;
+
+alias f1 "echo var IRb64 = 'ZnVuY3Rpb24gaW5zdGFudFJlcXVlc3QobWV0aG9kKSB7ZmV0Y2goImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMSIsIHsgbWV0aG9kOiBtZXRob2QgfSk7fQo='"
+//function instantRequest(method) {fetch("http://localhost:3001", { method: method });}
+
+alias f2 "echo eval(atob(IRb64))"
+
+alias f3 "echo var DRb64 = 'ZnVuY3Rpb24gZGVsYXllZFJlcXVlc3QobWV0aG9kLCBkZWxheSkgewogICAgc2V0VGltZW91dCgoKSA9PiB7CiAgICAgICAgaW5zdGFudFJlcXVlc3QobWV0aG9kKTsKICAgIH0sIGRlbGF5KTsKfQo='"
+//function delayedRequest(method, delay) {setTimeout(() => {instantRequest(method);}, delay);}
+
+alias f4 "echo eval(atob(DRb64))"
+
+alias f5 "echo var BRb64 = 'ZnVuY3Rpb24gYm90aFJlcXVlc3QobWV0aG9kMSwgbWV0aG9kMiwgZGVsYXkpIHtpbnN0YW50UmVxdWVzdChtZXRob2QxKTtkZWxheWVkUmVxdWVzdChtZXRob2QyLCBkZWxheSk7IH0='"
+//function bothRequest(method1, method2, delay) {instantRequest(method1);delayedRequest(method2, delay); }
+
+alias f6 "echo eval(atob(BRb64))"
+
+alias c1 "echo var b64shoot = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBzaG9vdCAiKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsICgpID0+IGJvdGhSZXF1ZXN0KCJTSE9PVCIsICJTVE9QU0hPT1QiLCAxMCkpOw=='"
+//document.getElementById(" shoot ").addEventListener("click", () => bothRequest("SHOOT", "STOPSHOOT", 10));
+//add space in element ID because of source engine special character escaping
+
+alias c2 "echo eval(atob(b64shoot))"
+
+alias c3 "echo var b64forward = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBmb3J3YXJkICIpLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgKCkgPT4gYm90aFJlcXVlc3QoIkZPUldBUkQiLCAiU1RPUEZPUldBUkQiLCAzMDApKTs='"
+//document.getElementById(" forward ").addEventListener("click", () => bothRequest("FORWARD", "STOPFORWARD", 300));
+
+alias c4 "echo eval(atob(b64forward))"
+
+alias c5 "echo var b64backwards = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBiYWNrd2FyZHMgIikuYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiBib3RoUmVxdWVzdCgiQkFDS1dBUkRTIiwgIlNUT1BCQUNLV0FSRFMiLCAzMDApKTs='"
+//document.getElementById(" backwards ").addEventListener("click", () => bothRequest("BACKWARDS", "STOPBACKWARDS", 300));
+
+alias c6 "echo eval(atob(b64backwards))"
+
+alias c7 "echo var b64left = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBsZWZ0ICIpLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgKCkgPT4gYm90aFJlcXVlc3QoIkxFRlQiLCAiU1RPUExFRlQiLCAzMDApKTs='"
+//document.getElementById(" left ").addEventListener("click", () => bothRequest("LEFT", "STOPLEFT", 300));
+
+alias c8 "echo eval(atob(b64left))"
+
+alias c9 "echo var b64right = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiByaWdodCAiKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsICgpID0+IGJvdGhSZXF1ZXN0KCJSSUdIVCIsICJTVE9QUklHSFQiLCAzMDApKTs='"
+//document.getElementById(" right ").addEventListener("click", () => bothRequest("RIGHT", "STOPRIGHT", 300));
+
+alias c10 "echo eval(atob(b64right))"
+
+alias c11 "echo var b64duck = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBkdWNrICIpLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgKCkgPT4gYm90aFJlcXVlc3QoIkRVQ0siLCAiU1RPUERVQ0siLCA1MDAwKSk7'"
+//document.getElementById(" duck ").addEventListener("click", () => bothRequest("DUCK", "STOPDUCK", 5000));
+
+alias c12 "echo eval(atob(b64duck))"
+
+alias c13 "echo var b64jump = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBqdW1wICIpLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgKCkgPT4gYm90aFJlcXVlc3QoIkpVTVAiLCAiU1RPUEpVTVAiLCAxMDApKTs='"
+//document.getElementById(" jump ").addEventListener("click", () => bothRequest("JUMP", "STOPJUMP", 100));
+
+alias c14 "echo eval(atob(b64jump))"
+
+alias c15 "echo var b64lookleft = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBsb29rbGVmdCAiKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsICgpID0+IGJvdGhSZXF1ZXN0KCJMT09LTEVGVCIsICJTVE9QTE9PS0xFRlQiLCAyMCkpOw=='"
+//document.getElementById(" lookleft ").addEventListener("click", () => bothRequest("LOOKLEFT", "STOPLOOKLEFT", 20));
+
+alias c16 "echo eval(atob(b64lookleft))"
+
+alias c17 "echo var b64lookright = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBsb29rcmlnaHQgIikuYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiBib3RoUmVxdWVzdCgiTE9PS1JJR0hUIiwgIlNUT1BMT09LUklHSFQiLCAyMCkpOw=='"
+//document.getElementById(" lookright ").addEventListener("click", () => bothRequest("LOOKRIGHT", "STOPLOOKRIGHT", 20));
+
+alias c18 "echo eval(atob(b64lookright))"
+
+alias c19 "echo var b64slot1 = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBzbG90MSAiKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsICgpID0+IGluc3RhbnRSZXF1ZXN0KCJTTE9UMSIpKTs='"
+//document.getElementById(" slot1 ").addEventListener("click", () => instantRequest("SLOT1"));
+
+alias c20 "echo eval(atob(b64slot1))"
+
+alias c21 "echo var b64slot2 = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBzbG90MiAiKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsICgpID0+IGluc3RhbnRSZXF1ZXN0KCJTTE9UMiIpKTs='"
+//document.getElementById(" slot2 ").addEventListener("click", () => instantRequest("SLOT2"));
+
+alias c22 "echo eval(atob(b64slot2))"
+
+alias c23 "echo var b64slot3 = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiBzbG90MyAiKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsICgpID0+IGluc3RhbnRSZXF1ZXN0KCJTTE9UMyIpKTs='"
+//document.getElementById(" slot3 ").addEventListener("click", () => instantRequest("SLOT3"));
+
+alias c24 "echo eval(atob(b64slot3))"
+
+alias c25 "echo var b64respawn = 'ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiByZXNwYXduICIpLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgKCkgPT4gaW5zdGFudFJlcXVlc3QoIktJTEwiKSk7'"
+//document.getElementById(" respawn ").addEventListener("click", () => instantRequest("KILL"));
+
+alias c26 "echo eval(atob(b64respawn))"
+
+alias c27 "echo var b64reset ='ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIiByZXNldCAiKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsICgpID0+IGluc3RhbnRSZXF1ZXN0KCJSRVNFVCIpKTs='"
+//document.getElementById(" reset ").addEventListener("click", () => instantRequest("RESET"));
+
+alias c28 "echo eval(atob(b64reset))"
+
+//game commands corresponding to custom methods
+alias SHOOT "+attack"
+
+alias STOPSHOOT "-attack"
+
+alias FORWARD "+forward"
+
+alias STOPFORWARD "-forward"
+
+alias LEFT "+moveleft"
+
+alias STOPLEFT "-moveleft"
+
+alias BACKWARDS "+back"
+
+alias STOPBACKWARDS "-back"
+
+alias RIGHT "+moveright"
+
+alias STOPRIGHT "-moveright"
+
+alias DUCK "+duck"
+
+alias STOPDUCK "-duck"
+
+alias JUMP "+jump"
+
+alias STOPJUMP "-jump"
+
+alias LOOKLEFT "+left"
+
+alias STOPLOOKLEFT "-left"
+
+alias LOOKRIGHT "+right"
+
+alias STOPLOOKRIGHT "-right"
+
+alias RESET "game_type 1; game_mode 2; sv_game_mode_flags 32; bot_difficulty 0; bot_quota 7; mp_roundtime 60; mp_fraglimit 0; mp_restartgame 1; jointeam 2;"
+
+//no alias for slot1,slot2,slot3, and kill because they're already the default commands
+
+//handles all info outputting commands
+alias info "i1; i2; i3; i4; i5; i6; i7; i8; i9; i10; i11;"
+
+alias i1 "echo <h2>What is this?</h2>"
+alias i2 "echo <p>This is a personal project and a nightmare. I had so much fun with it!</p>"
+alias i3 "echo <p>This is a web server entirely hosted and served from a vanilla CSGO Legacy client developer console. There is no Apache, Python, VScript, or any other bypasses.</p>"
+alias i4 "echo <p>Source engine games after LFD2 have a launch option to expose their developer consoles on to any port. This port is designed to be telnetted into and act 1 to 1 as the dev console.</p>"
+alias i5 "echo <p>This port can be connected to by the web browser, though. By default, this does nothing, as the Source Engine dev console obviously does not speak http.</p>"
+alias i6 "echo <p>When a browser connects, each individual header of the browser GET request is interpreted as a command by the console.</p>"
+alias i7 "echo <p>Using the Source Engine alias command, I am able to duck tape a proper http header and HTML page to the GET command. This command is the first thing sent by every browser in a get request.</p>"
+alias i8 "echo <p>Finally, I can use javascript I wrote on the HTML page to fetch the CSGO client. Each button on this site sends a fetch request with an arbitrary illegitimate http request type.</p>"
+alias i9 "echo <p>I can then make an alias for these http request types in Source whenever they are sent. I do this the same way I did for get requests. These aliases map to in game inputs.</p>"
+alias i10 "echo <p>This effectively creates a controller for CSGO that communicates remotely over TCP through the browser. I plan to livestream my client and then allow viewers to control the game from this site.</p>"
+alias i11 "echo <p>This was not without struggle. The Source Engine does not like to echo special characters like semicolons and quotations. Programming this felt like I was trying to make SQL injection bypass a filter.</p>"
+
+alias scream echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+//used to fill up extra space because I haven't calculated content length yet. Isn't necessary because other general console commands fill the gap
